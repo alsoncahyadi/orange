@@ -79,7 +79,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'orange',
         'USER': 'root',
-        'PASSWORD': 'rootpw',
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': '33060'
     }
 }
 
