@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'orange.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'orange',
-        'USER': 'root',
-        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': '33060'
+        'NAME': os.getenv('JAWSDB_DATABASE_NAME'),
+        'USER': os.getenv('JAWSDB_USERNAME'),
+        'PASSWORD': os.getenv('JAWSDB_PASSWORD'),
+        'HOST': os.getenv('JAWSDB_HOST'),
+        'PORT': os.getenv('JAWSDB_PORT')
     }
 }
 
