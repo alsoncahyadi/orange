@@ -25,7 +25,7 @@ SECRET_KEY = '3(k0+fhr-(dd@qppzejusdchl5d*bm3kox&4()(@%!8a=-2_72'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["arfiadi.herokuapp.com"]
 
 
 # Application definition
@@ -77,9 +77,11 @@ WSGI_APPLICATION = 'orange.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'orange',
-        'USER': 'root',
-        'PASSWORD': 'rootpw',
+        'NAME': os.getenv('JAWSDB_DATABASE_NAME'),
+        'USER': os.getenv('JAWSDB_USERNAME'),
+        'PASSWORD': os.getenv('JAWSDB_PASSWORD'),
+        'HOST': os.getenv('JAWSDB_HOST'),
+        'PORT': os.getenv('JAWSDB_PORT')
     }
 }
 
@@ -121,3 +123,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
