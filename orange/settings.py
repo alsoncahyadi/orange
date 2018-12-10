@@ -87,14 +87,14 @@ WSGI_APPLICATION = 'orange.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'orange',
-#         'USER': 'root',
-#         'PASSWORD': 'rootpw',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'orange',
+        'USER': 'root',
+        'PASSWORD': 'rootpw',
+    }
+}
 
 DB_URL = os.getenv('DB_URL')
 DATABASES['default'] = dj_database_url.parse(DB_URL, conn_max_age=600)
