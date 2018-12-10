@@ -19,38 +19,77 @@ class MyPagination(pagination.PageNumberPagination):
         })
 
 # Serializers define the API representation.
+# Revenue
 class UserSerializer(s.HyperlinkedModelSerializer):
   class Meta:
     model = User
     fields = ('url', 'username', 'email', 'is_staff')
+
         
 class ClientSerializer(s.ModelSerializer):
   class Meta:
     model = Client
     fields = '__all__'
 
+
 class MandorSerializer(s.ModelSerializer):
   class Meta:
     model = Mandor
     fields = '__all__'
+
 
 class JobOrderSerializer(s.ModelSerializer):
   class Meta:
     model = JobOrder
     fields = '__all__'
 
+
 class ServiceOrderSerializer(s.ModelSerializer):
   class Meta:
     model = ServiceOrder
     fields = '__all__'
+
 
 class ServiceBillSerializer(s.ModelSerializer):
   class Meta:
     model = ServiceBill
     fields = '__all__'
 
+
 class BudgetPlanSerializer(s.ModelSerializer):
   class Meta:
     model = BudgetPlan
     fields = '__all__'
+
+
+# Expenditure
+class PurchaseOrderSerializer(s.ModelSerializer):
+  class Meta:
+    model = PurchaseOrder
+    fields = '__all__'
+
+    
+class ItemSerializer(s.ModelSerializer):
+  class Meta:
+    model = Item
+    fields = '__all__'
+
+    
+class ReceivingReportSerializer(s.ModelSerializer):
+  class Meta:
+    model = ReceivingReport
+    fields = '__all__'
+
+    
+class PaymentReceiptSerializer(s.ModelSerializer):
+  class Meta:
+    model = PaymentReceipt
+    fields = '__all__'
+
+    
+class SupplierSerializer(s.ModelSerializer):
+  class Meta:
+    model = Supplier
+    fields = '__all__'
+
     

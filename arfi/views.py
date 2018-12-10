@@ -16,6 +16,7 @@ class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all().order_by('-date_joined')
   serializer_class = UserSerializer
 
+# Revenue
 class ClientViewSet(viewsets.ModelViewSet):
   queryset = Client.objects.all()
   serializer_class = ClientSerializer
@@ -39,3 +40,25 @@ class ServiceBillViewSet(viewsets.ModelViewSet):
 class BudgetPlanViewSet(viewsets.ModelViewSet):
   queryset = BudgetPlan.objects.all()
   serializer_class = BudgetPlanSerializer
+
+# Expenditure
+class PurchaseOrderViewSet(viewsets.ModelViewSet):
+  queryset = PurchaseOrder.objects.all()
+  serializer_class = PurchaseOrderSerializer
+
+class ItemViewSet(viewsets.ModelViewSet):
+  queryset = Item.objects.all()
+  serializer_class = ItemSerializer
+
+class ReceivingReportViewSet(viewsets.ModelViewSet):
+  queryset = ReceivingReport.objects.all()
+  serializer_class = ReceivingReportSerializer
+
+class PaymentReceiptViewSet(viewsets.ModelViewSet):
+  queryset = PaymentReceipt.objects.all()
+  serializer_class = PaymentReceiptSerializer
+
+class SupplierViewSet(viewsets.ModelViewSet):
+  queryset = Supplier.objects.all()
+  serializer_class = SupplierSerializer
+

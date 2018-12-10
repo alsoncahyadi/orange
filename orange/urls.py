@@ -18,15 +18,22 @@ from django.contrib import admin
 from rest_framework import routers
 from arfi import views
 
-REVENUE_URL='revenue/'
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
-router.register(REVENUE_URL + 'clients', views.ClientViewSet)
-router.register(REVENUE_URL + 'mandor', views.MandorViewSet)
-router.register(REVENUE_URL + 'job_order', views.JobOrderViewSet)
-router.register(REVENUE_URL + 'service_order', views.ServiceOrderViewSet)
-router.register(REVENUE_URL + 'service_bill', views.ServiceBillViewSet)
-router.register(REVENUE_URL + 'budget_plan', views.BudgetPlanViewSet)
+# Revenue
+router.register('clients', views.ClientViewSet)
+router.register('mandor', views.MandorViewSet)
+router.register('job_order', views.JobOrderViewSet)
+router.register('service_order', views.ServiceOrderViewSet)
+router.register('service_bill', views.ServiceBillViewSet)
+router.register('budget_plan', views.BudgetPlanViewSet)
+
+# Expenditure
+router.register('purchase_order', views.PurchaseOrderViewSet)
+router.register('inventory_list', views.ItemViewSet)
+router.register('receiving_report', views.ReceivingReportViewSet)
+router.register('payment_receipt', views.PaymentReceiptViewSet)
+router.register('supplier', views.SupplierViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
