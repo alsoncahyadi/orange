@@ -4,6 +4,29 @@ from arfi.models import *
 from django.conf import settings
 from rest_framework import pagination
 from rest_framework.response import Response
+from rest_framework.fields import SerializerMethodField
+
+
+class MyModelSerializer(s.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        super(MyModelSerializer, self).__init__(*args, **kwargs)
+
+        if 'labels' in self.fields:
+            raise RuntimeError(
+                'You cant have labels field defined '
+                'while using MyModelSerializer'
+            )
+
+        self.fields['labels'] = SerializerMethodField()
+
+    def get_labels(self, *args):
+        labels = {}
+
+        for field in self.Meta.model._meta.get_fields():
+            if field.name in self.fields:
+                labels[field.name] = field.verbose_name
+
+        return labels
 
 class MyPagination(pagination.PageNumberPagination):
 
@@ -26,68 +49,68 @@ class UserSerializer(s.HyperlinkedModelSerializer):
     fields = ('url', 'username', 'email', 'is_staff')
 
         
-class ClientSerializer(s.ModelSerializer):
+class ClientSerializer(MyModelSerializer):
   class Meta:
     model = Client
     fields = '__all__'
 
 
-class MandorSerializer(s.ModelSerializer):
+class MandorSerializer(MyModelSerializer):
   class Meta:
     model = Mandor
     fields = '__all__'
 
 
-class JobOrderSerializer(s.ModelSerializer):
+class JobOrderSerializer(MyModelSerializer):
   class Meta:
     model = JobOrder
     fields = '__all__'
 
 
-class ServiceOrderSerializer(s.ModelSerializer):
+class ServiceOrderSerializer(MyModelSerializer):
   class Meta:
     model = ServiceOrder
     fields = '__all__'
 
 
-class ServiceBillSerializer(s.ModelSerializer):
+class ServiceBillSerializer(MyModelSerializer):
   class Meta:
     model = ServiceBill
     fields = '__all__'
 
 
-class BudgetPlanSerializer(s.ModelSerializer):
+class BudgetPlanSerializer(MyModelSerializer):
   class Meta:
     model = BudgetPlan
     fields = '__all__'
 
 
 # Expenditure
-class PurchaseOrderSerializer(s.ModelSerializer):
+class PurchaseOrderSerializer(MyModelSerializer):
   class Meta:
     model = PurchaseOrder
     fields = '__all__'
 
     
-class ItemSerializer(s.ModelSerializer):
+class ItemSerializer(MyModelSerializer):
   class Meta:
     model = Item
     fields = '__all__'
 
     
-class ReceivingReportSerializer(s.ModelSerializer):
+class ReceivingReportSerializer(MyModelSerializer):
   class Meta:
     model = ReceivingReport
     fields = '__all__'
 
     
-class PaymentReceiptSerializer(s.ModelSerializer):
+class PaymentReceiptSerializer(MyModelSerializer):
   class Meta:
     model = PaymentReceipt
     fields = '__all__'
 
     
-class SupplierSerializer(s.ModelSerializer):
+class SupplierSerializer(MyModelSerializer):
   class Meta:
     model = Supplier
     fields = '__all__'

@@ -16,28 +16,29 @@ Including another URLconf
 from django.urls import include, path
 from django.contrib import admin
 from rest_framework import routers
-from arfi import views
+from arfi.view_sets import *
+import arfi
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
+router.register(r'users', UserViewSet)
 # Revenue
-router.register('clients', views.ClientViewSet)
-router.register('mandor', views.MandorViewSet)
-router.register('job_order', views.JobOrderViewSet)
-router.register('service_order', views.ServiceOrderViewSet)
-router.register('service_bill', views.ServiceBillViewSet)
-router.register('budget_plan', views.BudgetPlanViewSet)
+router.register('clients', ClientViewSet)
+router.register('mandor', MandorViewSet)
+router.register('job_order', JobOrderViewSet)
+router.register('service_order', ServiceOrderViewSet)
+router.register('service_bill', ServiceBillViewSet)
+router.register('budget_plan', BudgetPlanViewSet)
 
 # Expenditure
-router.register('purchase_order', views.PurchaseOrderViewSet)
-router.register('inventory_list', views.ItemViewSet)
-router.register('receiving_report', views.ReceivingReportViewSet)
-router.register('payment_receipt', views.PaymentReceiptViewSet)
-router.register('supplier', views.SupplierViewSet)
+router.register('purchase_order', PurchaseOrderViewSet)
+router.register('item', ItemViewSet)
+router.register('receiving_report', ReceivingReportViewSet)
+router.register('payment_receipt', PaymentReceiptViewSet)
+router.register('supplier', SupplierViewSet)
 
 urlpatterns = [
+    path('', include('arfi.urls')),
     path('api/', include(router.urls)),
-    path('arfi/', include('arfi.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls'))
 ]
