@@ -6,8 +6,9 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
+    initial = True
+    
     dependencies = [
-        ('arfi', '0001_initial'),
     ]
 
     operations = [
@@ -76,16 +77,6 @@ class Migration(migrations.Migration):
                 ('client_id', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='arfi.Client', verbose_name='Client ID')),
                 ('jobs', models.ManyToManyField(to='arfi.JobOrder', verbose_name='List Pekerjaan')),
             ],
-        ),
-        migrations.RemoveField(
-            model_name='choice',
-            name='question',
-        ),
-        migrations.DeleteModel(
-            name='Choice',
-        ),
-        migrations.DeleteModel(
-            name='Question',
         ),
         migrations.AddField(
             model_name='servicebill',
