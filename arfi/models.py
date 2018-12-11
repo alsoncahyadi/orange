@@ -6,6 +6,9 @@ class Client(m.Model):
   class Meta:
     verbose_name = "Client"
     verbose_name_plural = "Clients"
+  
+  def __str__(self):
+    return "{}: {} (ID: {})".format(self.__class__.__name__, self.name, self.id)
 
   id = m.AutoField(verbose_name="Client ID", primary_key=True)
   name = m.CharField(max_length=200, verbose_name="Nama Client")
@@ -16,6 +19,9 @@ class Mandor(m.Model):
   class Meta:
     verbose_name = "Mandor"
     verbose_name_plural = "Mandor-Mandor"
+  
+  def __str__(self):
+    return "{}: {} (ID: {})".format(self.__class__.__name__, self.name, self.id)
 
   id = m.AutoField(verbose_name="Mandor ID", primary_key=True)
   name = m.CharField(max_length=200, verbose_name="Nama Mandor")
@@ -24,7 +30,7 @@ class Mandor(m.Model):
 
 
 class JobOrder(m.Model):
-  class Meta:
+  class Meta:   
     verbose_name = "Job Order"
     verbose_name_plural = "Job Orders"
 
@@ -87,6 +93,9 @@ class Transaction(m.Model):
     verbose_name = "Transaction"
     verbose_name_plural = "Transactions"
 
+  def __str__(self):
+    return "{}: {} {} (ID: {})".format(self.__class__.__name__, self.item, self.quantity, self.id)
+
   purchase_order = m.ForeignKey('PurchaseOrder', verbose_name="Purchase Order", on_delete=m.DO_NOTHING)
   item = m.ForeignKey('Item', verbose_name="Item", on_delete=m.DO_NOTHING)
   receiving_report = m.ForeignKey('ReceivingReport', verbose_name="Receiving Report", on_delete=m.DO_NOTHING)
@@ -111,8 +120,12 @@ class Item(m.Model):
   class Meta:
     verbose_name = "Inventory List"
     verbose_name_plural = "Inventory Lists"
+
+  def __str__(self):
+    return "{}: {} (ID: {})".format(self.__class__.__name__, self.name, self.id)
   
   updated_at = m.DateTimeField(verbose_name="Tanggal Diperbaharui", auto_now=True)
+  name = m.CharField(verbose_name="Nama Barang", max_length=200, default="")
   quantity = m.BigIntegerField(verbose_name="Quantity", default=0)
   price = m.BigIntegerField(verbose_name="Harga", default=0)
 
@@ -144,6 +157,9 @@ class Supplier(m.Model):
   class Meta:
     verbose_name = "Supplier"
     verbose_name_plural = "Suppliers"
+
+  def __str__(self):
+    return "{}: {} (ID: {})".format(self.__class__.__name__, self.name, self.id)
 
   name = m.CharField(max_length=200, verbose_name="Nama Mandor")
   address = m.CharField(verbose_name="Alamat", max_length=200)

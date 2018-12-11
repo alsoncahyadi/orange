@@ -23,18 +23,18 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 # Revenue
 router.register('clients', ClientViewSet)
-router.register('mandor', MandorViewSet)
-router.register('job_order', JobOrderViewSet)
-router.register('service_order', ServiceOrderViewSet)
-router.register('service_bill', ServiceBillViewSet)
-router.register('budget_plan', BudgetPlanViewSet)
+router.register('mandors', MandorViewSet)
+router.register('job_orders', JobOrderViewSet)
+router.register('service_orders', ServiceOrderViewSet)
+router.register('service_bills', ServiceBillViewSet)
+router.register('budget_plans', BudgetPlanViewSet)
 
 # Expenditure
-router.register('purchase_order', PurchaseOrderViewSet)
-router.register('item', ItemViewSet)
-router.register('receiving_report', ReceivingReportViewSet)
-router.register('payment_receipt', PaymentReceiptViewSet)
-router.register('supplier', SupplierViewSet)
+router.register('purchase_orders', PurchaseOrderViewSet)
+router.register('items', ItemViewSet)
+router.register('receiving_reports', ReceivingReportViewSet)
+router.register('payment_receipts', PaymentReceiptViewSet)
+router.register('suppliers', SupplierViewSet)
 
 urlpatterns = [
     path('', include('arfi.urls')),
