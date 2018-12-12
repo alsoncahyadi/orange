@@ -41,7 +41,7 @@ router.register('suppliers', SupplierViewSet)
 urlpatterns = [
     path('', include('arfi.urls')),
     path('api/', include(router.urls)),
-    path('admin/', admin_site.urls),
-    path('admin-django/', admin.site.urls),
+    path('admin/', admin.site.urls),
+    path('administrator/', admin_site.urls),
     path('api-auth/', include('rest_framework.urls'))
 ]
