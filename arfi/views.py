@@ -34,9 +34,13 @@ NAVBAR_DATA = [
   ('Expenditure Cycle',
     [
       get_data(PurchaseOrder),
-      get_data(Item),
       get_data(ReceivingReport),
       get_data(PaymentReceipt),
+    ]
+  ),
+  ('Inventory',
+    [
+      get_data(Item),
     ]
   )
 ]

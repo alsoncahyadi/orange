@@ -33,6 +33,12 @@
 
 /* Main styles */
 
+th {
+  font-family: 'bpicons', 'Avenir Next', Avenir, 'Helvetica Neue', 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: #ffffff;
+}
+
 body {
 	font-family: 'Avenir Next', Avenir, 'Helvetica Neue', 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
 	overflow: hidden;
