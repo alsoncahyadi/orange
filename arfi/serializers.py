@@ -100,26 +100,20 @@ class SupplierReturnableMixin():
 
 class ItemsReturnableMixin():
 
-  def get_items(self, object):
+  def get_items_raw(self, object):
     try:
       serialized = ItemSerializer(object.items.all(), many=True)
       return serialized.data
     except:
       None
 
-  def get_items_serialized(self, object):
+  def get_items(self, object):
+    try:
       serialized = ItemSerializer(object.items.all(), many=True)
       data = ", ".join(["{} ({}x)".format(datum["name"], datum["quantity"]) for datum in serialized.data])
       return data
-
-
-class DatePrettifyMixin():
-
-  def get_date_pretty(self, object):
-    try:
-      return object.date.strftime("%A, %d %B %Y %I:%M%p")
     except:
-      return None
+      None
 
 
 # Serializers define the API representation.
@@ -142,30 +136,30 @@ class MandorSerializer(MyModelSerializer):
     fields = '__all__'
 
 
-class JobOrderSerializer(MyModelSerializer, MandorReturnableMixin, DatePrettifyMixin):
+class JobOrderSerializer(MyModelSerializer, MandorReturnableMixin):
   mandor = s.SerializerMethodField()
   mandor_name = s.SerializerMethodField()
-  date_pretty = s.SerializerMethodField()
+  date = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
 
   class Meta:
     model = JobOrder
     fields = '__all__'
 
 
-class ServiceOrderSerializer(MyModelSerializer, ClientReturnableMixin, DatePrettifyMixin):
+class ServiceOrderSerializer(MyModelSerializer, ClientReturnableMixin):
   client = s.SerializerMethodField()
   client_name = s.SerializerMethodField()
-  date_pretty = s.SerializerMethodField()
+  date = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
 
   class Meta:
     model = ServiceOrder
     fields = '__all__'
 
 
-class ServiceBillSerializer(MyModelSerializer, ClientReturnableMixin, DatePrettifyMixin):
+class ServiceBillSerializer(MyModelSerializer, ClientReturnableMixin):
   client = s.SerializerMethodField()
   client_name = s.SerializerMethodField()
-  date_pretty = s.SerializerMethodField()
+  date = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
 
   class Meta:
     model = ServiceBill
@@ -190,46 +184,38 @@ class TransactionSerializer(MyModelSerializer):
     model = Transaction
     fields = '__all__'
 
-class ItemSerializer(MyModelSerializer, DatePrettifyMixin):
-  updated_at_pretty = s.SerializerMethodField()
+class ItemSerializer(MyModelSerializer):
+  updated_at = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
   
   class Meta:
     model = Item
     fields = '__all__'
 
-  def get_updated_at_pretty(self, object):
-    try:
-      return object.updated_at.strftime("%A, %d %B %Y %I:%M%p")
-    except:
-      return None
 
-
-class PurchaseOrderSerializer(MyModelSerializer, SupplierReturnableMixin, ItemsReturnableMixin, DatePrettifyMixin):
+class PurchaseOrderSerializer(MyModelSerializer, SupplierReturnableMixin, ItemsReturnableMixin):
   supplier = s.SerializerMethodField()
   supplier_name = s.SerializerMethodField()
   items = s.SerializerMethodField()
-  items_serialized = s.SerializerMethodField()
-  date_pretty = s.SerializerMethodField()
+  date = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
 
   class Meta:
     model = PurchaseOrder
     fields = '__all__'
 
     
-class ReceivingReportSerializer(MyModelSerializer, SupplierReturnableMixin, ItemsReturnableMixin, DatePrettifyMixin):
+class ReceivingReportSerializer(MyModelSerializer, SupplierReturnableMixin, ItemsReturnableMixin):
   supplier = s.SerializerMethodField()
   supplier_name = s.SerializerMethodField()
   items = s.SerializerMethodField()
-  items_serialized = s.SerializerMethodField()
-  date_pretty = s.SerializerMethodField()
+  date = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
 
   class Meta:
     model = ReceivingReport
     fields = '__all__'
 
     
-class PaymentReceiptSerializer(MyModelSerializer, DatePrettifyMixin):
-  date_pretty = s.SerializerMethodField()
+class PaymentReceiptSerializer(MyModelSerializer):
+  date = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
 
   class Meta:
     model = PaymentReceipt
