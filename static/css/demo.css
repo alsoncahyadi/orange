@@ -37,6 +37,15 @@ th {
   font-family: 'bpicons', 'Avenir Next', Avenir, 'Helvetica Neue', 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
   font-size: 13px;
   color: #ffffff;
+  background-color: #ffffff30;
+}
+
+.odd {
+  background-color: #00000050 !important;
+}
+
+.even {
+  background-color: #00000080;
 }
 
 body {
@@ -96,7 +105,7 @@ a:hover {
 	text-indent: 3px;
 	letter-spacing: 3px;
 	text-transform: uppercase;
-	color: #5c5edc;
+	color: #6264f0;
 }
 
 .bp-tooltip:after {
@@ -228,7 +237,9 @@ a:hover {
 	font-size: 0.75em;
 	letter-spacing: 2px;
   text-transform: uppercase;
-  color: #5c5edc;
+  color:#5c5edc;
+  font-weight: bold !important;
+  padding: 10px 0 0 0;
 }
 
 .content {
