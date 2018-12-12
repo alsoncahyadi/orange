@@ -98,6 +98,20 @@ class SupplierReturnableMixin():
     except:
       return None
 
+class ItemsReturnableMixin():
+
+  def get_items(self, object):
+    try:
+      serialized = ItemSerializer(object.items.all(), many=True)
+      return serialized.data
+    except:
+      None
+
+  def get_items_serialized(self, object):
+      serialized = ItemSerializer(object.items.all(), many=True)
+      data = ", ".join(["{} ({}x)".format(datum["name"], datum["quantity"]) for datum in serialized.data])
+      return data
+
 
 # Serializers define the API representation.
 # Revenue
@@ -170,40 +184,26 @@ class ItemSerializer(MyModelSerializer):
     fields = '__all__'
 
 
-class PurchaseOrderSerializer(MyModelSerializer, SupplierReturnableMixin):
+class PurchaseOrderSerializer(MyModelSerializer, SupplierReturnableMixin, ItemsReturnableMixin):
   supplier = s.SerializerMethodField()
   supplier_name = s.SerializerMethodField()
   items = s.SerializerMethodField()
-  
+  items_serialized = s.SerializerMethodField()
+
   class Meta:
     model = PurchaseOrder
     fields = '__all__'
 
-  def get_items(self, purchase_order):
-    try:
-      serialized = ItemSerializer(data=model_to_dict(purchase_order.items.all()), many=True)
-      serialized.is_valid()
-      return serialized.validated_data
-    except:
-      return None
-
     
-class ReceivingReportSerializer(MyModelSerializer, SupplierReturnableMixin):
+class ReceivingReportSerializer(MyModelSerializer, SupplierReturnableMixin, ItemsReturnableMixin):
   supplier = s.SerializerMethodField()
   supplier_name = s.SerializerMethodField()
   items = s.SerializerMethodField()
+  items_serialized = s.SerializerMethodField()
 
   class Meta:
     model = ReceivingReport
     fields = '__all__'
-
-  def get_items(self, receiving_report):
-    try:
-      serialized = ItemSerializer(data=model_to_dict(receiving_report.items.all()), many=True)
-      serialized.is_valid()
-      return serialized.validated_data
-    except:
-      return None
 
     
 class PaymentReceiptSerializer(MyModelSerializer):

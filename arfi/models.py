@@ -161,6 +161,6 @@ class Supplier(m.Model):
   def __str__(self):
     return "{}: {} (ID: {})".format(self.__class__.__name__, self.name, self.id)
 
-  name = m.CharField(max_length=200, verbose_name="Nama Mandor")
+  name = m.CharField(max_length=200, verbose_name="Nama Supplier")
   address = m.CharField(verbose_name="Alamat", max_length=200)
   phone = m.CharField(max_length=20, verbose_name="No. HP")
