@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th data-data="id">No.Order</th>
-      <th data-data="date_pretty">Tanggal</th>
+      <th data-data="date">Tanggal</th>
       <th data-data="client_id">Client ID</th>
       <th data-data="client_name">Nama Client</th>
       <th data-data="project_name">Nama Proyek</th>
@@ -18,7 +18,17 @@
 {% block table_script %}
 <script>
     $(document).ready(function() {
-        $('#service_orders').DataTable();
+        $('#service_orders').DataTable({
+          columns: [
+            {},
+            {},
+            { searchable:false },
+            { searchable:false, orderable:false },
+            {},
+            {},
+            {},
+          ]
+        });
     });
 </script>
 {% endblock %}

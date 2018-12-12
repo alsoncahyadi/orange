@@ -9,10 +9,10 @@ Job Order
   <thead>
     <tr>
       <th data-data="id">PO. Order</th>
-      <th data-data="date_pretty">Tanggal</th>
+      <th data-data="date">Tanggal</th>
       <th data-data="supplier_id">Supplier ID</th>
       <th data-data="supplier_name">Nama Supplier</th>
-      <th data-data="items_serialized">Item List</th>
+      <th data-data="items">Item List</th>
     </tr>
   </thead>
 </table>
@@ -21,8 +21,15 @@ Job Order
 {% block table_script %}
 <script>
     $(document).ready(function() {
-        $('#purchase_orders').DataTable();
+        $('#purchase_orders').DataTable({
+          columns: [
+            { searchable:false },
+            {},
+            { searchable:false },
+            { searchable:false, orderable:false },
+            { searchable:false },
+          ]
+        });
     });
 </script>
 {% endblock %}
-

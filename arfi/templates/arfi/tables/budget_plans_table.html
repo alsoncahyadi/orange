@@ -18,7 +18,17 @@
 {% block table_script %}
 <script>
     $(document).ready(function() {
-        $('#budget_plans').DataTable();
+        $('#budget_plans').DataTable({
+          columns: [
+            { searchable:false },
+            {},
+            {},
+            {},
+            { searchable:false },
+            { searchable:false },
+            { searchable:false, orderable:false },
+          ]
+        });
     });
 </script>
 {% endblock %}

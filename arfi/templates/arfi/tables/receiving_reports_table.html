@@ -8,11 +8,12 @@ Job Order
 <table id="receiving_reports" class="table table-striped table-bordered" style="width:100%" data-server-side="true" data-ajax="/api/receiving_reports/?format=datatables">
   <thead>
     <tr>
+      <!-- <th data-data="purchase_order_id">PO. Order</th> -->
       <th data-data="id">PO. Order</th>
       <th data-data="supplier_id">Tanggal Diperbaharui</th>
       <th data-data="supplier_name">Nama Supplier</th>
-      <th data-data="date_pretty">Tanggal</th>
-      <th data-data="items_serialized">Item list</th>
+      <th data-data="date">Tanggal</th>
+      <th data-data="items">Item list</th>
     </tr>
   </thead>
 </table>
@@ -21,7 +22,15 @@ Job Order
 {% block table_script %}
 <script>
     $(document).ready(function() {
-        $('#receiving_reports').DataTable();
+        $('#service_bills').DataTable({
+          columns: [
+            { searchable:false },
+            { searchable:false },
+            { searchable:false },
+            { searchable:false, orderable:false },
+            {},
+          ]
+        });
     });
 </script>
 {% endblock %}
