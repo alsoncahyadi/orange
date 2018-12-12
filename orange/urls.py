@@ -17,6 +17,7 @@ from django.urls import include, path
 from django.contrib import admin
 from rest_framework import routers
 from arfi.view_sets import *
+from arfi.admin import admin_site
 import arfi
 
 router = routers.DefaultRouter()
@@ -40,6 +41,7 @@ router.register('suppliers', SupplierViewSet)
 urlpatterns = [
     path('', include('arfi.urls')),
     path('api/', include(router.urls)),
-    path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
+    path('admin-django/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls'))
 ]
