@@ -46,7 +46,7 @@
         {% for category, models in navbar %}
 				<ul data-menu="submenu-{{forloop.counter}}" id="submenu-{{forloop.counter}}" class="menu__level" tabindex="-1" role="menu" aria-label="{{category}}">
           {% for url, model in models %}
-          <li class="menu__item" role="menuitem"><a class="menu__link" href="/clients">{{ model }}</a></li>
+          <li class="menu__item" role="menuitem"><a class="menu__link" href="/{{ url }}">{{ model }}</a></li>
           {% endfor %}
         </ul>
         {% endfor %}
