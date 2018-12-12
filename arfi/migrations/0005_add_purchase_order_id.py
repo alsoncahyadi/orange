@@ -14,12 +14,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='paymentreceipt',
             name='purchase_order_id',
-            field=models.OneToOneField(default=None, on_delete=django.db.models.deletion.DO_NOTHING, to='arfi.PurchaseOrder', verbose_name='Purchase Order ID'),
+            field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.DO_NOTHING, to='arfi.PurchaseOrder', verbose_name='Purchase Order ID'),
         ),
         migrations.AddField(
             model_name='receivingreport',
             name='purchase_order_id',
-            field=models.OneToOneField(default=None, on_delete=django.db.models.deletion.DO_NOTHING, to='arfi.PurchaseOrder', verbose_name='Purchase Order ID'),
+            field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.DO_NOTHING, to='arfi.PurchaseOrder', verbose_name='Purchase Order ID'),
         ),
         migrations.AlterField(
             model_name='receivingreport',
