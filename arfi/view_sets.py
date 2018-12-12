@@ -37,6 +37,10 @@ class BudgetPlanViewSet(viewsets.ModelViewSet):
   serializer_class = BudgetPlanSerializer
 
 # Expenditure
+class TransactionViewSet(viewsets.ModelViewSet):
+  queryset = Transaction.objects.all()
+  serializer_class = TransactionSerializer
+
 class PurchaseOrderViewSet(viewsets.ModelViewSet):
   queryset = PurchaseOrder.objects.all()
   serializer_class = PurchaseOrderSerializer

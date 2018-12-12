@@ -1,0 +1,25 @@
+{% extends 'arfi/base.html' %}
+{% block table %}
+<table id="budget_plans" class="table table-striped table-bordered" style="width:100%" data-server-side="true" data-ajax="/api/budget_plans/?format=datatables">
+  <thead>
+    <tr>
+      <th data-data="service_order_id">No.Order</th>
+      <th data-data="job_info">Uraian Pekerjaan</th>
+      <th data-data="volume">Volume</th>
+      <th data-data="unit">Unit</th>
+      <th data-data="price">Harga</th>
+      <th data-data="amount">Jumlah</th>
+      <th data-data="total">Total</th>
+    </tr>
+  </thead>
+</table>
+{% endblock %}
+
+{% block table_script %}
+<script>
+    $(document).ready(function() {
+        $('#budget_plans').DataTable();
+    });
+</script>
+{% endblock %}
+

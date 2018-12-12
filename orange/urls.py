@@ -30,6 +30,7 @@ router.register('service_bills', ServiceBillViewSet)
 router.register('budget_plans', BudgetPlanViewSet)
 
 # Expenditure
+router.register('transactions', TransactionViewSet)
 router.register('purchase_orders', PurchaseOrderViewSet)
 router.register('items', ItemViewSet)
 router.register('receiving_reports', ReceivingReportViewSet)

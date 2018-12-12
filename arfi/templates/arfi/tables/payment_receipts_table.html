@@ -1,0 +1,28 @@
+{% extends 'arfi/base.html' %}
+
+{% block title %}
+Job Order
+{% endblock %}
+
+{% block table %}
+<table id="payment_receipts" class="table table-striped table-bordered" style="width:100%" data-server-side="true" data-ajax="/api/payment_receipts/?format=datatables">
+  <thead>
+    <tr>
+      <th data-data="id">PO. Order</th>
+      <th data-data="date">Tanggal</th>
+      <th data-data="bill">Tagihan</th>
+      <th data-data="total">Total</th>
+      <th data-data="confirmation">Konfirmasi</th>
+    </tr>
+  </thead>
+</table>
+{% endblock %}
+
+{% block table_script %}
+<script>
+    $(document).ready(function() {
+        $('#payment_receipts').DataTable();
+    });
+</script>
+{% endblock %}
+

@@ -159,6 +159,11 @@ class BudgetPlanSerializer(MyModelSerializer):
 
 
 # Expenditure
+class TransactionSerializer(MyModelSerializer):
+  class Meta:
+    model = Transaction
+    fields = '__all__'
+
 class ItemSerializer(MyModelSerializer):
   class Meta:
     model = Item
@@ -174,7 +179,7 @@ class PurchaseOrderSerializer(MyModelSerializer, SupplierReturnableMixin):
     model = PurchaseOrder
     fields = '__all__'
 
-  def get_items(self, purchase_orer):
+  def get_items(self, purchase_order):
     try:
       serialized = ItemSerializer(data=model_to_dict(purchase_order.items.all()), many=True)
       serialized.is_valid()
@@ -186,10 +191,19 @@ class PurchaseOrderSerializer(MyModelSerializer, SupplierReturnableMixin):
 class ReceivingReportSerializer(MyModelSerializer, SupplierReturnableMixin):
   supplier = s.SerializerMethodField()
   supplier_name = s.SerializerMethodField()
+  items = s.SerializerMethodField()
 
   class Meta:
     model = ReceivingReport
     fields = '__all__'
+
+  def get_items(self, receiving_report):
+    try:
+      serialized = ItemSerializer(data=model_to_dict(receiving_report.items.all()), many=True)
+      serialized.is_valid()
+      return serialized.validated_data
+    except:
+      return None
 
     
 class PaymentReceiptSerializer(MyModelSerializer):

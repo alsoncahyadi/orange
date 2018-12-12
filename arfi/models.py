@@ -65,7 +65,6 @@ class ServiceBill(m.Model):
   date = m.DateTimeField(verbose_name="Tanggal")
   client_id = m.ForeignKey(Client, verbose_name="Client ID", on_delete=m.DO_NOTHING, default=None)
   # client_name
-  client_name = m.CharField(max_length=200, verbose_name="Nama Client")
   project_name = m.CharField(max_length=200, verbose_name="Nama Proyek")
   address = m.CharField(max_length=500, verbose_name="Alamat")
   jobs = m.ManyToManyField(JobOrder, verbose_name="List Pekerjaan")
@@ -103,18 +102,6 @@ class Transaction(m.Model):
   created_at = m.DateTimeField(auto_now_add=True)
   updated_at = m.DateTimeField(auto_now=True)
 
-class PurchaseOrder(m.Model):
-  class Meta:
-    verbose_name = "Purchase Order"
-    verbose_name_plural = "Purchase Orders"
-
-  id = m.AutoField(verbose_name="PO. Number", primary_key=True)
-  date = m.DateTimeField(verbose_name="Tanggal")
-  supplier_id = m.ForeignKey('Supplier', verbose_name="Supplier ID", on_delete=m.DO_NOTHING)
-  # supplier_name
-  # item_number, item_name
-  items = m.ManyToManyField('Item', verbose_name="Items list", through=Transaction)
-
 
 class Item(m.Model):
   class Meta:
@@ -128,6 +115,19 @@ class Item(m.Model):
   name = m.CharField(verbose_name="Nama Barang", max_length=200, default="")
   quantity = m.BigIntegerField(verbose_name="Quantity", default=0)
   price = m.BigIntegerField(verbose_name="Harga", default=0)
+
+
+class PurchaseOrder(m.Model):
+  class Meta:
+    verbose_name = "Purchase Order"
+    verbose_name_plural = "Purchase Orders"
+
+  id = m.AutoField(verbose_name="PO. Number", primary_key=True)
+  date = m.DateTimeField(verbose_name="Tanggal")
+  supplier_id = m.ForeignKey('Supplier', verbose_name="Supplier ID", on_delete=m.DO_NOTHING)
+  # supplier_name
+  # item_number, item_name
+  items = m.ManyToManyField(Item, verbose_name="Items list", through=Transaction)
 
 
 class ReceivingReport(m.Model):

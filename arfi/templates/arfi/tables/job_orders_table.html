@@ -1,0 +1,28 @@
+{% extends 'arfi/base.html' %}
+
+{% block title %}
+Job Order
+{% endblock %}
+
+{% block table %}
+<table id="job_orders" class="table table-striped table-bordered" style="width:100%" data-server-side="true" data-ajax="/api/job_orders/?format=datatables">
+  <thead>
+    <tr>
+      <th data-data="id">No.Order</th>
+      <th data-data="date">Tanggal</th>
+      <th data-data="mandor_id">Mandor ID</th>
+      <th data-data="mandor_name">Nama Mandor</th>
+      <th data-data="job_info">Uraian Pekerjaan</th>
+    </tr>
+  </thead>
+</table>
+{% endblock %}
+
+{% block table_script %}
+<script>
+    $(document).ready(function() {
+        $('#job_orders').DataTable();
+    });
+</script>
+{% endblock %}
+
