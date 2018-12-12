@@ -13,12 +13,12 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='paymentreceipt',
-            name='purchase_order_id',
+            name='purchase_order',
             field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.DO_NOTHING, to='arfi.PurchaseOrder', verbose_name='Purchase Order ID'),
         ),
         migrations.AddField(
             model_name='receivingreport',
-            name='purchase_order_id',
+            name='purchase_order',
             field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.DO_NOTHING, to='arfi.PurchaseOrder', verbose_name='Purchase Order ID'),
         ),
         migrations.AlterField(
