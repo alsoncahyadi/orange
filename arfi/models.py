@@ -135,7 +135,7 @@ class ReceivingReport(m.Model):
     verbose_name = "Receiving Report"
     verbose_name_plural = "Receiving Reports"
 
-  # purchase_order = m.OneToOneField(PurchaseOrder, verbose_name="Purchase Order ID", on_delete=m.DO_NOTHING, default=1, db_index=True)
+  purchase_order = m.OneToOneField(PurchaseOrder, verbose_name="Purchase Order ID", on_delete=m.DO_NOTHING, null=True, db_index=True)
   supplier_id = m.ForeignKey('Supplier', verbose_name="Supplier ID", on_delete=m.DO_NOTHING)
   # supplier_name
   date = m.DateTimeField(verbose_name="Tanggal", db_index=True)
@@ -147,7 +147,7 @@ class PaymentReceipt(m.Model):
     verbose_name = "Payment Receipt"
     verbose_name_plural = "Payment Receipts"
 
-  # purchase_order = m.OneToOneField(PurchaseOrder, verbose_name="Purchase Order ID", on_delete=m.DO_NOTHING, default=1, db_index=True)
+  purchase_order = m.OneToOneField(PurchaseOrder, verbose_name="Purchase Order ID", on_delete=m.DO_NOTHING, null=True, db_index=True)
   date = m.DateTimeField(verbose_name="Tanggal", db_index=True)
   bill = m.BigIntegerField(verbose_name="Tagihan")
   total = m.BigIntegerField(verbose_name="Total")
