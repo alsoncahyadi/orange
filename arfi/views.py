@@ -8,6 +8,7 @@ import pydf
 import requests
 import json
 import re
+import locale
 
 def convert(name):
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
@@ -117,14 +118,7 @@ def service_bills_pdf(request, id):
   if not sb:
     raise Http404("Service bill does not exist")
 
-  jobs = sb.first().jobs.all()
-  client = sb.first().client_id
   datetime = sb.first().date
-  price = sb.first().price
-  total_price = sb.first().total_price
-  day = datetime.strftime("%A")
-  date = datetime.strftime("%d %B %Y")
-  time = datetime.strftime("%I:%M%p")
 
   logo_relative_path = "img/arfi_logo.jpg"
   logo_absolute_path = find(logo_relative_path)
@@ -141,17 +135,18 @@ def service_bills_pdf(request, id):
     'page-size': 'A4',
   }
 
+
   rendered = render(request, 'arfi/receipt.html', {
-    'logo_path': str(logo_absolute_path),
+    'logo_path': logo_absolute_path,
     'invoice_id': id,
     'stuff_type': "Service Bill",
-    'day': day,
-    'date': date,
-    'time': time,
-    'price': price,
-    'total_price': total_price,
+    'day': datetime.strftime("%A"),
+    'date': datetime.strftime("%d %B %Y"),
+    'time': datetime.strftime("%I:%M%p"),
+    'price': '{:20,.0f}'.format(sb.first().price) ,
+    'total_price': '{:20,.0f}'.format(sb.first().total_price),
     'jobs': jobs,
-    'client': client,
+    'client': sb.first().client_id,
   })
   raw_html = rendered.content.decode('UTF-8')
   pdf = pydf.generate_pdf(raw_html, **options)
