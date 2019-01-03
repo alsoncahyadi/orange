@@ -1,3 +1,4 @@
+from django.contrib.staticfiles.finders import find
 from django.shortcuts import render
 from django.http.response import HttpResponse, Http404
 from django.template import Context, Template, loader
@@ -119,25 +120,40 @@ def service_bills_pdf(request, id):
   jobs = sb.first().jobs.all()
   client = sb.first().client_id
   datetime = sb.first().date
+  price = sb.first().price
   total_price = sb.first().total_price
   day = datetime.strftime("%A")
   date = datetime.strftime("%d %B %Y")
   time = datetime.strftime("%I:%M%p")
 
+  logo_relative_path = "img/arfi_logo.jpg"
+  logo_absolute_path = find(logo_relative_path)
+
+  jobs = []
+  for job in sb.first().jobs.all():
+    jobs.append({
+      'mandor_name': job.mandor_id.name,
+      'date': job.date.strftime("%A, %d %B %Y %I:%M%p"),
+      'job_info': job.job_info
+    })
+
   options = {
-    'page-size': 'Letter',
+    'page-size': 'A4',
   }
 
   rendered = render(request, 'arfi/receipt.html', {
+    'logo_path': str(logo_absolute_path),
     'invoice_id': id,
     'stuff_type': "Service Bill",
+    'day': day,
     'date': date,
-    'total_price': total_price,
     'time': time,
+    'price': price,
+    'total_price': total_price,
     'jobs': jobs,
-    'client': client
+    'client': client,
   })
   raw_html = rendered.content.decode('UTF-8')
   pdf = pydf.generate_pdf(raw_html, **options)
-  return rendered
+  # return rendered
   return HttpResponse(pdf, content_type='application/pdf')

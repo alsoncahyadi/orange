@@ -1,4 +1,5 @@
 {% load static %}
+{% load pdf_filters %}
 
 <!doctype html>
 <html>
@@ -7,6 +8,14 @@
     <title>{{stuff_type}} - #{{ invoice_id }}</title>
     
     <style>
+    .right {
+        text-align: right;
+    }
+
+    .center {
+        text-align: center;
+    }
+
     .invoice-box {
         max-width: 1000px;
         margin: auto;
@@ -45,10 +54,10 @@
         color: #333;
     }
     
-    .invoice-box table tr.information table td {
-        padding-bottom: 40px;
+    .invoice-box table.header {
+        padding: 0px 120px 10px 120px;
     }
-    
+
     .invoice-box table tr.heading td {
         background: #eee;
         border-bottom: 1px solid #ddd;
@@ -104,43 +113,29 @@
 
 <body>
     <div class="invoice-box">
-        <table cellpadding="0" cellspacing="0">
+        <table cellpadding="0" cellspacing="15" class="header">
             <tr class="top">
-                <td colspan="2">
-                    <table>
-                        <tr class="tops">
-                            <td class="title">
-                                <img src="{% static "img/arfi_logo.jpg" %}" style="width:100%; max-width:300px;">
-                            </td>
-                            
-                            <td>
-                                {{ stuff_type }} #: {{ invoice_id }}<br>
-                                Created on: {{ date }}<br>
-                                at {{ time }}
-                            </td>
-                        </tr>
-                    </table>
+                <td class="title" colspan="2">
+                    <img src="{{ logo_path }}" style="width:65%; max-width:300px;">
+                </td>
+                <td class="right">
+                    {{ stuff_type }} #{{ invoice_id }}<br>
+                    {{ day }}, {{ date }}
                 </td>
             </tr>
             
             <tr class="information">
                 <td colspan="2">
-                    <table>
-                        <tr class="tops">
-                            <td>
-                                Biro Jasa Teknik Elektrik<br>
-                                Jln Ciateul Wetan No 12<br>
-                                Bandung, Jawa Barat
-                            </td>
-                            
-                            <td>
-                                To: {{ client.name }}<br>
-                                {{ client.address }}
-                            </td>
-                        </tr>
-                    </table>
+                    Biro Jasa Teknik Elektrik<br>
+                    Jln Ciateul Wetan No 12<br>
+                    Bandung, Jawa Barat
+                </td>
+                <td class="right">
+                    <strong>{{ client.name }}</strong><br>
+                    {{ client.address }}
                 </td>
             </tr>
+        </table>
             
             <!-- <tr class="heading">
                 <td>
@@ -162,6 +157,7 @@
                 </td>
             </tr> -->
             
+        <table cellpadding="0" cellspacing="0">
             <tr class="heading">
                 <td>Mandor</td>
                 <td>Tanggal</td>
@@ -169,17 +165,17 @@
             </tr>
             {% for job in jobs %}
             <tr class="item">
-                <td>Website design</td>
-                <td>$300.00</td>
-                <td>$300.00</td>
+                <td>{{ job.mandor_name }}</td>
+                <td>{{ job.date }}</td>
+                <td>{{ job.job_info }}</td>
             </tr>{% endfor %}
 
             <tr class="total">
                 <td></td>
-                <td></td>
+                <td class="center">Harga: Rp {{price}}</td>
                 
                 <td>
-                   Total: Rp {{ total_price }}
+                   Total Harga: Rp {{ total_price }}
                 </td>
             </tr>
         </table>
