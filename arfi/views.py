@@ -113,6 +113,44 @@ def payment_receipts_view(request):
   })
 
 # pdf
+def service_orders_pdf(request, id):
+  so = ServiceOrder.objects.filter(id=id)
+  if not so:
+    raise Http404("Service bill does not exist")
+
+  datetime = so.first().date
+
+  logo_relative_path = "img/arfi_logo.jpg"
+  logo_absolute_path = find(logo_relative_path)
+
+  jobs = []
+  for job in so.first().jobs.all():
+    jobs.append({
+      'mandor_name': job.mandor_id.name,
+      'date': job.date.strftime("%A, %d %B %Y %I:%M%p"),
+      'job_info': job.job_info
+    })
+
+  options = {
+    'page-size': 'A4',
+  }
+
+  rendered = render(request, 'arfi/receipts/service_order_receipt.html', {
+    'logo_path': logo_absolute_path,
+    'invoice_id': id,
+    'stuff_type': "Service Order",
+    'project_name': so.first().project_name,
+    'day': datetime.strftime("%A"),
+    'date': datetime.strftime("%d %B %Y"),
+    'time': datetime.strftime("%I:%M%p"),
+    'jobs': jobs,
+    'client': so.first().client_id,
+  })
+  raw_html = rendered.content.decode('UTF-8')
+  pdf = pydf.generate_pdf(raw_html, **options)
+  # return rendered
+  return HttpResponse(pdf, content_type='application/pdf')
+
 def service_bills_pdf(request, id):
   sb = ServiceBill.objects.filter(id=id)
   if not sb:
@@ -135,11 +173,11 @@ def service_bills_pdf(request, id):
     'page-size': 'A4',
   }
 
-
-  rendered = render(request, 'arfi/receipt.html', {
+  rendered = render(request, 'arfi/receipts/service_bill_receipt.html', {
     'logo_path': logo_absolute_path,
     'invoice_id': id,
     'stuff_type': "Service Bill",
+    'project_name': sb.first().project_name,
     'day': datetime.strftime("%A"),
     'date': datetime.strftime("%d %B %Y"),
     'time': datetime.strftime("%I:%M%p"),
