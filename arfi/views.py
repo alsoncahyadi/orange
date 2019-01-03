@@ -111,11 +111,9 @@ def payment_receipts_view(request):
   })
 
 # pdf
-def payment_receipts_pdf(request, id):
-  # rendered = render(request, 'arfi/tables/payment_receipts_table.html', {
-  #   'navbar': NAVBAR_DATA,
-  #   'title': 'Payment Receipt',
-  # })
+def service_bills_pdf(request, id):
+  sb = ServiceBill.objects.filter(id=id)
+  print(sb)
 
   options = {
     'page-size': 'A4',
