@@ -58,7 +58,7 @@ class MandorReturnableMixin():
     except:
       return None
 
-  def get_mandor_name(self, object):
+  def get_mandor_id__name(self, object):
     try:
       return object.mandor_id.name
     except:
@@ -75,7 +75,7 @@ class ClientReturnableMixin():
     except:
       return None
 
-  def get_client_name(self, object):
+  def get_client_id__name(self, object):
     try:
       return object.client_id.name
     except:
@@ -92,7 +92,7 @@ class SupplierReturnableMixin():
     except:
       return None
 
-  def get_supplier_name(self, object):
+  def get_supplier_id__name(self, object):
     try:
       return object.supplier_id.name
     except:
@@ -107,7 +107,7 @@ class ItemsReturnableMixin():
     except:
       None
 
-  def get_items(self, object):
+  def get_items__name(self, object):
     try:
       serialized = ItemSerializer(object.items.all(), many=True)
       data = ", ".join(["{} ({}x)".format(datum["name"], datum["quantity"]) for datum in serialized.data])
@@ -138,7 +138,7 @@ class MandorSerializer(MyModelSerializer):
 
 class JobOrderSerializer(MyModelSerializer, MandorReturnableMixin):
   mandor = s.SerializerMethodField()
-  mandor_name = s.SerializerMethodField()
+  mandor_id__name = s.SerializerMethodField()
   date = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
 
   class Meta:
@@ -148,7 +148,7 @@ class JobOrderSerializer(MyModelSerializer, MandorReturnableMixin):
 
 class ServiceOrderSerializer(MyModelSerializer, ClientReturnableMixin):
   client = s.SerializerMethodField()
-  client_name = s.SerializerMethodField()
+  client_id__name = s.SerializerMethodField()
   date = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
 
   class Meta:
@@ -158,7 +158,7 @@ class ServiceOrderSerializer(MyModelSerializer, ClientReturnableMixin):
 
 class ServiceBillSerializer(MyModelSerializer, ClientReturnableMixin):
   client = s.SerializerMethodField()
-  client_name = s.SerializerMethodField()
+  client_id__name = s.SerializerMethodField()
   date = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
 
   class Meta:
@@ -194,8 +194,8 @@ class ItemSerializer(MyModelSerializer):
 
 class PurchaseOrderSerializer(MyModelSerializer, SupplierReturnableMixin, ItemsReturnableMixin):
   supplier = s.SerializerMethodField()
-  supplier_name = s.SerializerMethodField()
-  items = s.SerializerMethodField()
+  supplier_id__name = s.SerializerMethodField()
+  items__name = s.SerializerMethodField()
   date = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
 
   class Meta:
@@ -205,8 +205,8 @@ class PurchaseOrderSerializer(MyModelSerializer, SupplierReturnableMixin, ItemsR
     
 class ReceivingReportSerializer(MyModelSerializer, SupplierReturnableMixin, ItemsReturnableMixin):
   supplier = s.SerializerMethodField()
-  supplier_name = s.SerializerMethodField()
-  items = s.SerializerMethodField()
+  supplier_id__name = s.SerializerMethodField()
+  items__name = s.SerializerMethodField()
   date = s.DateTimeField(format="%A, %d %B %Y %I:%M%p")
 
   class Meta:

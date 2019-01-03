@@ -6,7 +6,7 @@
       <th data-data="id">No.Order</th>
       <th data-data="date">Tanggal</th>
       <th data-data="client_id">Client ID</th>
-      <th data-data="client_name">Nama Client</th>
+      <th data-data="client_id__name">Nama Client</th>
       <th data-data="project_name">Nama Proyek</th>
       <th data-data="address">Alamat</th>
       <th data-data="jobs">List Pekerjaan</th>
@@ -20,13 +20,13 @@
     $(document).ready(function() {
         $('#service_orders').DataTable({
           columns: [
+            { searchable:false },
+            {},
+            { searchable:false },
+            {},
             {},
             {},
             { searchable:false },
-            { searchable:false, orderable:false },
-            {},
-            {},
-            {},
           ]
         });
     });
