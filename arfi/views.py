@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, Http404
 from django.template import Context, Template, loader
 from arfi.models import *
 # from
@@ -113,7 +113,16 @@ def payment_receipts_view(request):
 # pdf
 def service_bills_pdf(request, id):
   sb = ServiceBill.objects.filter(id=id)
-  print(sb)
+  if not sb:
+    raise Http404("Service bill does not exist")
+
+  jobs = sb.first().jobs.all()
+  client = sb.first().client_id
+  datetime = sb.first().date
+  total_price = sb.first().total_price
+  day = datetime.strftime("%A")
+  date = datetime.strftime("%d %B %Y")
+  time = datetime.strftime("%I:%M%p")
 
   options = {
     'page-size': 'Letter',
@@ -121,9 +130,14 @@ def service_bills_pdf(request, id):
 
   rendered = render(request, 'arfi/receipt.html', {
     'invoice_id': id,
-    'stuff_type': "Service Bill"
+    'stuff_type': "Service Bill",
+    'date': date,
+    'total_price': total_price,
+    'time': time,
+    'jobs': jobs,
+    'client': client
   })
   raw_html = rendered.content.decode('UTF-8')
   pdf = pydf.generate_pdf(raw_html, **options)
-  # return rendered
+  return rendered
   return HttpResponse(pdf, content_type='application/pdf')

@@ -4,11 +4,11 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>A simple, clean, and responsive HTML invoice template</title>
+    <title>{{stuff_type}} - #{{ invoice_id }}</title>
     
     <style>
     .invoice-box {
-        max-width: 800px;
+        max-width: 1000px;
         margin: auto;
         padding: 30px;
         border: 1px solid #eee;
@@ -30,12 +30,13 @@
         vertical-align: top;
     }
     
-    .invoice-box table tr td:nth-child(2) {
+    /* .invoice-box table tr td:nth-child(2) {
         text-align: right;
-    }
+    } */
     
     .invoice-box table tr.top table td {
         padding-bottom: 20px;
+        width: auto;
     }
     
     .invoice-box table tr.top table td.title {
@@ -66,7 +67,7 @@
         border-bottom: none;
     }
     
-    .invoice-box table tr.total td:nth-child(2) {
+    .invoice-box table tr.total {
         border-top: 2px solid #eee;
         font-weight: bold;
     }
@@ -107,15 +108,15 @@
             <tr class="top">
                 <td colspan="2">
                     <table>
-                        <tr>
+                        <tr class="tops">
                             <td class="title">
                                 <img src="{% static "img/arfi_logo.jpg" %}" style="width:100%; max-width:300px;">
                             </td>
                             
                             <td>
-                                Invoice #: {{ invoice_id }}<br>
-                                Created: January 1, 2015<br>
-                                Due: February 1, 2015
+                                {{ stuff_type }} #: {{ invoice_id }}<br>
+                                Created on: {{ date }}<br>
+                                at {{ time }}
                             </td>
                         </tr>
                     </table>
@@ -125,24 +126,23 @@
             <tr class="information">
                 <td colspan="2">
                     <table>
-                        <tr>
+                        <tr class="tops">
                             <td>
-                                Sparksuite, Inc.<br>
-                                12345 Sunny Road<br>
-                                Sunnyville, CA 12345
+                                Biro Jasa Teknik Elektrik<br>
+                                Jln Ciateul Wetan No 12<br>
+                                Bandung, Jawa Barat
                             </td>
                             
                             <td>
-                                Acme Corp.<br>
-                                John Doe<br>
-                                john@example.com
+                                To: {{ client.name }}<br>
+                                {{ client.address }}
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             
-            <tr class="heading">
+            <!-- <tr class="heading">
                 <td>
                     Payment Method
                 </td>
@@ -160,53 +160,26 @@
                 <td>
                     1000
                 </td>
-            </tr>
+            </tr> -->
             
             <tr class="heading">
-                <td>
-                    Item
-                </td>
-                
-                <td>
-                    Price
-                </td>
+                <td>Mandor</td>
+                <td>Tanggal</td>
+                <td>Uraian</td>
             </tr>
-            
+            {% for job in jobs %}
             <tr class="item">
-                <td>
-                    Website design
-                </td>
-                
-                <td>
-                    $300.00
-                </td>
-            </tr>
-            
-            <tr class="item">
-                <td>
-                    Hosting (3 months)
-                </td>
-                
-                <td>
-                    $75.00
-                </td>
-            </tr>
-            
-            <tr class="item last">
-                <td>
-                    Domain name (1 year)
-                </td>
-                
-                <td>
-                    $10.00
-                </td>
-            </tr>
-            
+                <td>Website design</td>
+                <td>$300.00</td>
+                <td>$300.00</td>
+            </tr>{% endfor %}
+
             <tr class="total">
+                <td></td>
                 <td></td>
                 
                 <td>
-                   Total: $385.00
+                   Total: Rp {{ total_price }}
                 </td>
             </tr>
         </table>
