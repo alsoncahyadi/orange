@@ -88,8 +88,8 @@ DATABASES = {
     }
 }
 
-DB_URL = os.getenv('DB_URL')
-DATABASES['default'] = dj_database_url.parse(DB_URL, conn_max_age=600)
+# DB_URL = os.getenv('DB_URL')
+# DATABASES['default'] = dj_database_url.parse(DB_URL, conn_max_age=600)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

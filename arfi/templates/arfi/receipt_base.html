@@ -1,0 +1,185 @@
+{% load static %}
+{% load pdf_filters %}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{stuff_type}} - #{{ invoice_id }}</title>
+    
+    <style>
+    .right {
+        text-align: right;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    strong {
+        color: #323497;
+    }
+
+    .invoice-box {
+        max-width: 1000px;
+        margin: auto;
+        padding: 30px;
+        border: 1px solid #eee;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+    }
+    
+    .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+    }
+    
+    .invoice-box table td {
+        padding: 5px;
+        vertical-align: top;
+    }
+    
+    /* .invoice-box table tr td:nth-child(2) {
+        text-align: right;
+    } */
+    
+    .invoice-box table tr.top table td {
+        padding-bottom: 20px;
+        width: auto;
+    }
+    
+    .invoice-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #333;
+    }
+    
+    .invoice-box table.header {
+        padding: 0px 75px 10px 75px;
+    }
+    
+    .invoice-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+    
+    .invoice-box table tr.details td {
+        padding-bottom: 20px;
+    }
+    
+    .invoice-box table tr.item td{
+        border-bottom: 1px solid #eee;
+    }
+    
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+    
+    .invoice-box table tr.total {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+    }
+    
+    @media only screen and (max-width: 600px) {
+        .invoice-box table tr.top table td {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+        
+        .invoice-box table tr.information table td {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+    }
+    
+    /** RTL **/
+    .rtl {
+        direction: rtl;
+        font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+    
+    .rtl table {
+        text-align: right;
+    }
+    
+    .rtl table tr td:nth-child(2) {
+        text-align: left;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="invoice-box">
+        <table cellpadding="0" cellspacing="20" class="header">
+            <tr class="top">
+                <td class="title" colspan="2">
+                    <img src="{{ logo_path }}" style="width:210px; max-width:300px;">
+                </td>
+                <td class="right">
+                    <h2>{{ stuff_type }} #{{ invoice_id }}</h2>
+                    {{ day }}, {{ date }}
+                </td>
+            </tr>
+            
+            <tr class="information">
+                <td colspan="2">
+                    Biro Jasa Teknik Elektrik<br>
+                    Jln Ciateul Wetan No 12<br>
+                    Bandung, Jawa Barat
+                </td>
+                <td class="right">
+                    Untuk <strong>{{ client.name }}</strong><br>
+                    {{ client.address }}<br>
+                    Proyek <strong>{{ project_name }}</strong>
+                </td>
+            </tr>
+        </table>
+        {% block invoice_content %}
+        <h2 class="center">Job List</h2>
+        <table cellpadding="0" cellspacing="0">
+            <tr class="heading">
+                <td>Mandor</td>
+                <td>Tanggal</td>
+                <td>Uraian</td>
+            </tr>
+            {% for job in jobs %}
+            <tr class="item">
+                <td>{{ job.mandor_name }}</td>
+                <td>{{ job.date }}</td>
+                <td>{{ job.job_info }}</td>
+            </tr>{% endfor %}
+        </table>
+        <br>
+        <h2 class="center">Detail</h2>
+        <table cellpadding="0" cellspacing="0">
+            <tr class="heading">
+                <td>
+                    Harga
+                </td>
+                
+                <td>
+                    Total Harga
+                </td>
+            </tr>
+            
+            <tr class="details">
+                <td>
+                    {{ price }}
+                </td>
+                
+                <td>
+                    {{ total_price }}
+                </td>
+            </tr>
+        </table>
+        {% endblock %}
+    </div>
+</body>
+</html>

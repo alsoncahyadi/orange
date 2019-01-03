@@ -1,0 +1,17 @@
+{% extends 'arfi/receipt_base.html' %}
+{% block invoice_content %}
+<h2 class="center">Job List</h2>
+<table cellpadding="0" cellspacing="0">
+    <tr class="heading">
+        <td>Mandor</td>
+        <td>Tanggal</td>
+        <td>Uraian</td>
+    </tr>
+    {% for job in jobs %}
+    <tr class="item">
+        <td>{{ job.mandor_name }}</td>
+        <td>{{ job.date }}</td>
+        <td>{{ job.job_info }}</td>
+    </tr>{% endfor %}
+</table>
+{% endblock %}

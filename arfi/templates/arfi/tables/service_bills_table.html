@@ -4,13 +4,15 @@ Service Bill
 {% endblock %}
 
 {% block table %}
+<p>* Click the row to get pdf</p>
 <table id="service_bills" class="table table-striped table-bordered" style="width:100%" data-server-side="true" data-ajax="/api/service_bills/?format=datatables">
   <thead>
     <tr>
+      <th data-data="id">id</th>
       <th data-data="service_order_id">No.Order</th>
       <th data-data="date">Tanggal</th>
       <th data-data="client_id">Client ID</th>
-      <th data-data="client_name">Nama Client</th>
+      <th data-data="client_id__name">Nama Client</th>
       <th data-data="project_name">Nama Proyek</th>
       <th data-data="address">Alamat</th>
       <th data-data="jobs">List Pekerjaan</th>
@@ -24,12 +26,13 @@ Service Bill
 {% block table_script %}
 <script>
     $(document).ready(function() {
-        $('#service_bills').DataTable({
+        table = $('#service_bills').DataTable({
           columns: [
+            { visible:false },
             { searchable:false },
             {},
             { searchable:false },
-            { searchable:false, orderable:false },
+            {},
             {},
             {},
             { searchable:false },
@@ -37,6 +40,11 @@ Service Bill
             { searchable:false },
           ]
         });
+
+        $('#service_bills').on( 'click', 'tr', function () {
+            var pdf_url = "{{ request.get_full_path }}/pdf/" + table.row( this ).data()["id"]
+            window.open( pdf_url );
+        } );
     });
 </script>
 {% endblock %}
