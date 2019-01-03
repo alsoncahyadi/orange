@@ -116,7 +116,7 @@ def payment_receipts_view(request):
 def service_orders_pdf(request, id):
   so = ServiceOrder.objects.filter(id=id)
   if not so:
-    raise Http404("Service bill does not exist")
+    raise Http404("Service order does not exist")
 
   datetime = so.first().date
 
