@@ -18,7 +18,7 @@
 {% block table_script %}
 <script>
     $(document).ready(function() {
-        $('#service_orders').DataTable({
+        table = $('#service_orders').DataTable({
           columns: [
             { searchable:false },
             {},
@@ -29,6 +29,11 @@
             { searchable:false },
           ]
         });
+
+        $('#service_orders').on( 'click', 'tr', function () {
+            var pdf_url = "{{ request.get_full_path }}/pdf/" + table.row( this ).data()["id"]
+            window.open( pdf_url );
+        } );
     });
 </script>
 {% endblock %}

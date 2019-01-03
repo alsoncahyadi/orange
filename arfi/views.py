@@ -116,17 +116,14 @@ def service_bills_pdf(request, id):
   print(sb)
 
   options = {
-    'page-size': 'A4',
-    'margin-top': '0.75in',
-    'margin-right': '0.75in',
-    'margin-bottom': '0.75in',
-    'margin-left': '0.75in',
+    'page-size': 'Letter',
   }
 
   rendered = render(request, 'arfi/receipt.html', {
-    'invoice_id': id
+    'invoice_id': id,
+    'stuff_type': "Service Bill"
   })
   raw_html = rendered.content.decode('UTF-8')
-  pdf = pydf.generate_pdf(raw_html, page_size="A4")
+  pdf = pydf.generate_pdf(raw_html, **options)
   # return rendered
   return HttpResponse(pdf, content_type='application/pdf')

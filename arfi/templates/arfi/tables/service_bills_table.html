@@ -7,6 +7,7 @@ Service Bill
 <table id="service_bills" class="table table-striped table-bordered" style="width:100%" data-server-side="true" data-ajax="/api/service_bills/?format=datatables">
   <thead>
     <tr>
+      <th data-data="id">id</th>
       <th data-data="service_order_id">No.Order</th>
       <th data-data="date">Tanggal</th>
       <th data-data="client_id">Client ID</th>
@@ -24,8 +25,9 @@ Service Bill
 {% block table_script %}
 <script>
     $(document).ready(function() {
-        $('#service_bills').DataTable({
+        table = $('#service_bills').DataTable({
           columns: [
+            { visible:false },
             { searchable:false },
             {},
             { searchable:false },
@@ -37,6 +39,11 @@ Service Bill
             { searchable:false },
           ]
         });
+
+        $('#service_bills').on( 'click', 'tr', function () {
+            var pdf_url = "{{ request.get_full_path }}/pdf/" + table.row( this ).data()["id"]
+            window.open( pdf_url );
+        } );
     });
 </script>
 {% endblock %}
