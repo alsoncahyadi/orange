@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse
-from django.template import Context, loader
+from django.template import Context, Template, loader
 from arfi.models import *
+# from
+import pdfkit
 import requests
 import json
 import re
@@ -107,3 +109,27 @@ def payment_receipts_view(request):
     'navbar': NAVBAR_DATA,
     'title': 'Payment Receipt',
   })
+
+# pdf
+def payment_receipts_pdf(request, id):
+  # rendered = render(request, 'arfi/tables/payment_receipts_table.html', {
+  #   'navbar': NAVBAR_DATA,
+  #   'title': 'Payment Receipt',
+  # })
+
+  options = {
+    'page-size': 'A4',
+    'margin-top': '0.75in',
+    'margin-right': '0.75in',
+    'margin-bottom': '0.75in',
+    'margin-left': '0.75in',
+  }
+
+  rendered = render(request, 'arfi/receipt.html', {
+    'invoice_id': id
+  })
+  raw_html = rendered.content.decode('UTF-8')
+  print(raw_html)
+  pdf = pdfkit.from_string(raw_html, False, options=options)
+  # return rendered
+  return HttpResponse(pdf, content_type='application/pdf')

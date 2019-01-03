@@ -15,4 +15,6 @@ urlpatterns = [
     path('items', views.items_view, name='items_view'),
     path('receiving_reports', views.receiving_reports_view, name='receiving_reports_view'),
     path('payment_receipts', views.payment_receipts_view, name='payment_receipts_view'),
+    # Pdf
+    path('payment_receipts/pdf/<int:id>', views.payment_receipts_pdf, name='payment_receipts_pdf'),
 ]
