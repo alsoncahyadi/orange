@@ -3,7 +3,7 @@ from django.http.response import HttpResponse
 from django.template import Context, Template, loader
 from arfi.models import *
 # from
-import pdfkit
+import pydf
 import requests
 import json
 import re
@@ -127,7 +127,6 @@ def service_bills_pdf(request, id):
     'invoice_id': id
   })
   raw_html = rendered.content.decode('UTF-8')
-  print(raw_html)
-  pdf = pdfkit.from_string(raw_html, False, options=options)
+  pdf = pydf.generate_pdf(raw_html, page_size="A4")
   # return rendered
   return HttpResponse(pdf, content_type='application/pdf')
